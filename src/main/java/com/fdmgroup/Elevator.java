@@ -2,7 +2,7 @@ package com.fdmgroup;
 
 import java.util.TreeMap;
 
-public class Elevator {
+public class Elevator implements Runnable {
 	
 	private int currentPeopleNum =0;//The number of people in the lift
 	private int currentFloorNum =0 ;
@@ -84,5 +84,10 @@ public class Elevator {
 		task.put(floorNumberOfPersonLeaveOut, numberAfterAPersonExit);
 		
 	}
-
+	
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }
