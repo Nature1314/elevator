@@ -13,6 +13,7 @@ public class Elevator implements Runnable {
 
 	public int getFloorNumber() {
 		return currentFloorNum;
+		
 	}
 	
 	public void changePeopleNumber(int changeNumOfPerson) {
@@ -40,27 +41,31 @@ public class Elevator implements Runnable {
 	protected void changeFloorNumberAndRemoveTasks() {
 		//The lift floor number increase only if the lift goes up and we have tasks to go up. 
 		//Other condition the floor number decreases unless we are on ground floor
+		System.out.println(currentFloorNum);
 		//This part will remove the task from the task treeMap and call the method changePeopleNumber to change the number of currentPeopleNum
 		if(task.containsKey(currentFloorNum)) {
 			changePeopleNumber(task.get(currentFloorNum));
+			System.out.printf("Revome task (%d,%d)",currentFloorNum, task.get(currentFloorNum));
 			task.remove(currentFloorNum);
 		}
 
 		//This part will control the lift to move.
-		if(task.isEmpty()!=true) {
-			if(liftGoUp) currentFloorNum+=1;
-			else currentFloorNum-=1;//Because we verify if we have task at ground floor before(and remove it), so we don't need worry about if the lift goes to -1.
-			changeFloorNumberAndRemoveTasks();//Continuous the task
+		if(!task.isEmpty()) {
+			if(liftGoUp) 
+				currentFloorNum++;
+			else
+				currentFloorNum--;//Because we verify if we have task at ground floor before(and remove it), so we don't need worry about if the lift goes to -1.
 		}else if (currentFloorNum!=0 && task.isEmpty()) {
 			currentFloorNum-=1;//Finish last go up task.
 			changeFloorNumberAndRemoveTasks();//Continuous go down
 		}else{
 			liftGoUp=true;//We don't have task, and we stop at ground floor. 
-		}		
+		}
+		//System.out.println(currentFloorNum);
 	}
 	
 	
-	public void addTasks(int floorNumberOfPersonComeIn, int floorNumberOfPersonLeaveOut) {
+	protected void addTasks(int floorNumberOfPersonComeIn, int floorNumberOfPersonLeaveOut) {
 		
 		//Add one person at the floor that the person leaves.		
 		int numberAfterANewPersonEnter=0;
@@ -82,7 +87,15 @@ public class Elevator implements Runnable {
 		//Update the map
 		task.put(floorNumberOfPersonComeIn, numberAfterANewPersonEnter);
 		task.put(floorNumberOfPersonLeaveOut, numberAfterAPersonExit);
+		System.out.printf("Add task (%d,%d) and (%d,%d)", floorNumberOfPersonComeIn, numberAfterANewPersonEnter, floorNumberOfPersonLeaveOut, numberAfterAPersonExit);
+	}
+	
+	public void runElevator(int floorNumberOfPersonComeIn, int floorNumberOfPersonLeaveOut) {
 		
+		addTasks(floorNumberOfPersonComeIn,floorNumberOfPersonLeaveOut);
+		if(currentFloorNum==0 && liftGoUp) {
+			changeFloorNumberAndRemoveTasks();
+		}
 	}
 	
 	public void run() {

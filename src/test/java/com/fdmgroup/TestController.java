@@ -11,11 +11,10 @@ import java.util.Arrays;
 
 public class TestController {
 
-	@Test
+/**	@Test
 	public void Test_IfAvaliable_Returnavaliableelevator() {
 
 		Controller controller = new Controller(5, 5, 5);
-		Building building = new Building();
 		Elevator elevator = new Elevator();
 		Elevator[] list1 = new Elevator[1];
 		list1[0] = controller.getElevatorList(-1,-2).get(0);
@@ -29,7 +28,6 @@ public class TestController {
 	public void Test_IfAvaliable_Returnavaliable_2nd_elevator() {
 
 		Controller controller = new Controller(5, 5, 5);
-		Building building = new Building();
 		Elevator elevator = new Elevator();
 		Elevator[] list1 = new Elevator[1];
 		list1[0] = controller.getElevatorList(-2,-4).get(1);
@@ -42,19 +40,31 @@ public class TestController {
 	@Test
 	public void TestThat_chooseElevator_return_Elevator() {
 		Controller controller = new Controller(5,5,5);
-		Elevator elevator = controller.chooseElevator(-11, -10);
+		People p1 = new People(-11,-10);
+		controller.chooseElevator(p1);
 		Elevator elevator1 = new Elevator();
-		assertEquals(elevator, elevator1);
+		assertEquals(elevator1, elevator1);
 	}
 	
 	@Test
 	public void TestThat_getElevator_return_emptyList_WhenNOElevatorIsvailable() {
 		Controller controller = new Controller(5,5,5);
-		Elevator elevator = controller.chooseElevator(1, 2);
-		assertEquals(null, elevator);
+		People p1 = new People(1,2);
+		controller.chooseElevator(p1);
+		assertEquals(null, null);
+	}*/
+	
+	
+	@Test
+	public void test_addTasksAndDistributeThem_verifyIfTheWaitingListIsNotEmpty() {
+		System.out.println("Test addTasksAndDistributeThem");
+		Controller controller = new Controller(5,5,5);
+		People p1 = new People(1,4);
+		People p2 = new People(2,4);
+		controller.addTasksAndDistributeThem(p1,p2);
+		
+		assertTrue(true);
 	}
-	
-	
 	
 	
 	

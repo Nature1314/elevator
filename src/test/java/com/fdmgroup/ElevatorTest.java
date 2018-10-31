@@ -57,7 +57,7 @@ public class ElevatorTest {
 	
 	@Test
 	public void test_changeFloorNumber_liftStayAtGroundFloor() {
-		System.out.println("Test changing floor Number");
+		System.out.println("Test changing floor Number At Ground Floor");
         Elevator lift = new Elevator();
         int expResult = 0;
         lift.changeFloorNumberAndRemoveTasks();
@@ -68,7 +68,7 @@ public class ElevatorTest {
 
 	@Test
 	public void test_changeFloorNumber_LiftGoUP() {
-		System.out.println("Test changing floor Number");
+		System.out.println("Test changing floor Number LiftGoUP");
         Elevator lift = new Elevator();
         int expResult = 0;
         int floorNumberOfPersonComeIn = 0;
@@ -82,7 +82,7 @@ public class ElevatorTest {
 	
 	@Test
 	public void test_changeFloorNumber_LiftGoDown() {
-		System.out.println("Test changing floor Number");
+		System.out.println("Test changing floor Number LiftGoDown");
         Elevator lift = new Elevator();
         int expResult = 0;
         int floorNumberOfPersonComeIn = 0;
