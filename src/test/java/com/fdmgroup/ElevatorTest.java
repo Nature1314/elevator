@@ -35,7 +35,7 @@ public class ElevatorTest {
         int floorNumberOfPersonComeIn = 0;
         int floorNumberOfPersonLeaveOff = 3;
         lift.addTasks(floorNumberOfPersonComeIn, floorNumberOfPersonLeaveOff);
-        TreeMap<Integer,Integer> myTask = lift.getTaskMap();
+        TreeMap<Integer,Integer> myTask = lift.getRiseTaskMap();
         int expResult = 1;
         int result = myTask.get(0);
         assertEquals(expResult, result);   
@@ -48,7 +48,7 @@ public class ElevatorTest {
         int floorNumberOfPersonComeIn = 0;
         int floorNumberOfPersonLeaveOut = 3;
         lift.addTasks(floorNumberOfPersonComeIn, floorNumberOfPersonLeaveOut);
-        TreeMap<Integer,Integer> myTask = lift.getTaskMap();
+        TreeMap<Integer,Integer> myTask = lift.getRiseTaskMap();
         int expResult = -1;
         int result = myTask.get(3);
         assertEquals(expResult, result);   
