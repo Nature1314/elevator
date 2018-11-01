@@ -58,9 +58,9 @@ public class TestController {
 	@Test
 	public void test_addTasksAndDistributeThem_verifyIfTheWaitingListIsNotEmpty() {
 		System.out.println("Test addTasksAndDistributeThem");
-		Controller controller = new Controller(5,5,1);
-		People p1 = new People(1,4);
-		People p2 = new People(2,3);
+		Controller controller = new Controller(5,5,4);
+		People p1 = new People(0,4);
+		People p2 = new People(3,2);
 		controller.addTasksAndDistributeThem(p1,p2);
 		
 		assertTrue(true);

@@ -52,39 +52,41 @@ public class Controller {
 	// choose one elevator
 	private void chooseElevator(People people) {
 	/**This method selects an elevator having the minimal moving time to get people*/
-		int currentfloor = people.getFloorEnterNum();
+		int peopleCurrentfloor = people.getFloorEnterNum();
 		int toFloor = people.getFloorExitNum();
 		
-		ArrayList<Elevator> avaliableElevator = getAvalibleElevatorList(currentfloor, toFloor);
+		ArrayList<Elevator> avaliableElevator = getAvalibleElevatorList(peopleCurrentfloor, toFloor);
 		//return the elevator that can been used
 		
 		if(!avaliableElevator.isEmpty()) {
 			//If there is any lift servicing for this person, then remove this person in waiting list.
 			Elevator elevator = calculateTimeAndselectMin(avaliableElevator, people);
+			//elevator.setKeepRunning(true);
 			elevator.runElevator(people.getFloorEnterNum(), people.getFloorExitNum());
-			elevator.ifKeepRunning(true);
+			//elevator.setKeepRunning(false);
 			listOfWaitingTask.remove(people);
 		}
 		
 	}
 
-	private ArrayList<Elevator> getAvalibleElevatorList(int currentfloor, int toFloor) {
+	private ArrayList<Elevator> getAvalibleElevatorList(int peopleCurrentfloor, int toFloor) {
 		/**This method is used to choose the elevator which is available (The number of people in the elevator less than max number  of people)
 		*The input 'floor' must >= zero and be the nature number 
 		*The input of 'toFloor' must >= zero and <= max building floors*/
 		
 		ArrayList<Elevator> AvaliableElevator = new ArrayList<Elevator>();
-
+		
 		for (Elevator eachElevator : listOfElevator) {
 			if (eachElevator.getCurrentPeopleNumber() < maxPeople) {
-				if(eachElevator.isLiftGoUp() && currentfloor > eachElevator.getFloorNumber() && toFloor > eachElevator.getFloorNumber()) {
+				if(eachElevator.isLiftGoUp() && peopleCurrentfloor > eachElevator.getFloorNumber() && toFloor > peopleCurrentfloor ) {
 					AvaliableElevator.add(eachElevator);
 			//If the lift go up, then it will only allow the people, who goes up, comes in and the current floor number of  this people must >= the floor number of lift 
-				} else if (!eachElevator.isLiftGoUp() && currentfloor < eachElevator.getFloorNumber() && toFloor < eachElevator.getFloorNumber()) {
+				} else if (!eachElevator.isLiftGoUp() && peopleCurrentfloor < eachElevator.getFloorNumber() && toFloor < peopleCurrentfloor) {
 					AvaliableElevator.add(eachElevator);
 			//If the lift go down, then it will only allow the people, who goes down, comes in and the current floor number of  this people must <= the floor number of lift 		
+				}else if(eachElevator.getDropTaskMap().isEmpty()&& eachElevator.getRiseTaskMap().isEmpty()) {
+					AvaliableElevator.add(eachElevator);
 				}
-				
 			}
 		}
 		return AvaliableElevator;
@@ -119,13 +121,13 @@ public class Controller {
 		int taskBetweenPeopleAndLift = 0;
 		
 		if(elevator.isLiftGoUp()) {
-			for(int key : elevator.getTaskMap().keySet()) {
+			for(int key : elevator.getDropTaskMap().keySet()) {
 				if(key>floorNumOfLiftNow && key<floorNumOfPeople) {
 					taskBetweenPeopleAndLift+=1;
 				}
 			}
 		}else {
-				for(int key : elevator.getTaskMap().keySet()) {
+				for(int key : elevator.getDropTaskMap().keySet()) {
 					if(key<floorNumOfLiftNow && key>floorNumOfPeople) {
 						taskBetweenPeopleAndLift+=1;
 						}
