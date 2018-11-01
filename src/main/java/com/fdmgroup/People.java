@@ -25,6 +25,4 @@ public class People {
 	public void setFloorExitNum(int floorExitNum) {
 		this.floorExitNum = floorExitNum;
 	}
-	
- 
 }
