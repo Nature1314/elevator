@@ -50,7 +50,7 @@ public class Controller {
 	}
 	
 	// choose one elevator
-	private void chooseElevator(People people) {
+	protected void chooseElevator(People people) {
 	/**This method selects an elevator having the minimal moving time to get people*/
 		int peopleCurrentfloor = people.getFloorEnterNum();
 		int toFloor = people.getFloorExitNum();
@@ -62,14 +62,14 @@ public class Controller {
 			//If there is any lift servicing for this person, then remove this person in waiting list.
 			Elevator elevator = calculateTimeAndselectMin(avaliableElevator, people);
 			//elevator.setKeepRunning(true);
-			elevator.runElevator(people.getFloorEnterNum(), people.getFloorExitNum());
+			elevator.addTasks(people.getFloorEnterNum(), people.getFloorExitNum());
 			//elevator.setKeepRunning(false);
 			listOfWaitingTask.remove(people);
 		}
 		
 	}
 
-	private ArrayList<Elevator> getAvalibleElevatorList(int peopleCurrentfloor, int toFloor) {
+	protected ArrayList<Elevator> getAvalibleElevatorList(int peopleCurrentfloor, int toFloor) {
 		/**This method is used to choose the elevator which is available (The number of people in the elevator less than max number  of people)
 		*The input 'floor' must >= zero and be the nature number 
 		*The input of 'toFloor' must >= zero and <= max building floors*/
