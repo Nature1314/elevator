@@ -27,6 +27,15 @@ public class ElevatorTest {
         assertEquals(expResult, result);
 	}
 	
+	@Test
+	public void test_getCurrentPeopleNumber() {
+		System.out.println("Test get current person Number");
+        Elevator lift = new Elevator();
+        int expResult = 0;
+        int result = lift.getCurrentPeopleNumber();
+        assertEquals(expResult, result);
+	}
+	
 	
 	@Test
 	public void test_addTask_addOnePersonWhenPersonComeIn() {
@@ -70,7 +79,7 @@ public class ElevatorTest {
 	public void test_changeFloorNumber_LiftGoUP() {
 		System.out.println("Test changing floor Number LiftGoUP");
         Elevator lift = new Elevator();
-        int expResult = 0;
+        int expResult = 1;
         int floorNumberOfPersonComeIn = 0;
         int floorNumberOfPersonLeaveOut = 3;
         lift.addTasks(floorNumberOfPersonComeIn, floorNumberOfPersonLeaveOut);
@@ -84,7 +93,7 @@ public class ElevatorTest {
 	public void test_changeFloorNumber_LiftGoDown() {
 		System.out.println("Test changing floor Number LiftGoDown");
         Elevator lift = new Elevator();
-        int expResult = 0;
+        int expResult = 1;
         int floorNumberOfPersonComeIn = 0;
         int floorNumberOfPersonLeaveOut = 3;
         lift.addTasks(floorNumberOfPersonComeIn, floorNumberOfPersonLeaveOut);
