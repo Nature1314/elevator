@@ -5,9 +5,9 @@ import java.util.TreeMap;
 
 public class Controller {
 
-	private int numOfFloor;
-	private int numOfElevator;
-	private int maxPeople;
+	private int totalNumOfFloor;//number of floor in building
+	private int numOfElevator;//number of elevator in building
+	private int maxPeople;//max people for each elevator
 	//private People people;
 	private ArrayList<Elevator> listOfElevator = new ArrayList<Elevator>();
 	private ArrayList<People> listOfWaitingTask = new ArrayList<People>();
@@ -16,9 +16,9 @@ public class Controller {
 	
 	
 	
-	public Controller(int numOfFloor, int numOfElevator, int maxPeople) {
+	public Controller(int totalNumOfFloor, int numOfElevator, int maxPeople) {
 		//The number of this three inputs must be nature number and greater than zero(>0) 
-		this.numOfFloor = numOfFloor;
+		this.totalNumOfFloor = totalNumOfFloor;
 		this.numOfElevator = numOfElevator;
 		this.maxPeople = maxPeople;
 		this.createThreadAndElevator();
@@ -62,6 +62,7 @@ public class Controller {
 			//If there is any lift servicing for this person, then remove this person in waiting list.
 			Elevator elevator = calculateTimeAndselectMin(avaliableElevator, people);
 			elevator.runElevator(people.getFloorEnterNum(), people.getFloorExitNum());
+			elevator.ifKeepRunning(true);
 			listOfWaitingTask.remove(people);
 		}
 		
