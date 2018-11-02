@@ -84,7 +84,7 @@ public class Controller {
 				} else if (!eachElevator.isLiftGoUp() && peopleCurrentfloor < eachElevator.getFloorNumber() && toFloor < peopleCurrentfloor) {
 					AvaliableElevator.add(eachElevator);
 			//If the lift go down, then it will only allow the people, who goes down, comes in and the current floor number of  this people must <= the floor number of lift 		
-				}else if(eachElevator.getDropTaskMap().isEmpty()&& eachElevator.getRiseTaskMap().isEmpty()) {
+				}else if(eachElevator.getDropTaskMap().isEmpty() && eachElevator.getRiseTaskMap().isEmpty()) {
 					AvaliableElevator.add(eachElevator);
 				}
 			}
@@ -92,7 +92,7 @@ public class Controller {
 		return AvaliableElevator;
 	}
 	
-	private Elevator calculateTimeAndselectMin(ArrayList<Elevator> availableElevator, People people) {
+	protected Elevator calculateTimeAndselectMin(ArrayList<Elevator> availableElevator, People people) {
 		/**This method return one elevator that use the minimal time
 		 * The first input is an ArrayList with the available elevator
 		 * The second input is a people object*/
@@ -114,7 +114,7 @@ public class Controller {
 		return theTimeArrivePeople.firstEntry().getValue();
 	}
 	
-	private int taskBetweenPeopleAndLift(Elevator elevator, int floorNumOfPeople) {
+	protected int taskBetweenPeopleAndLift(Elevator elevator, int floorNumOfPeople) {
 		/**This method returns the number of tasks between the floor that lift on 
 		 * and the floor that the people on*/
 		int floorNumOfLiftNow = elevator.getFloorNumber();
