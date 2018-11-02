@@ -27,6 +27,10 @@ public class Elevator implements Runnable{
 		return currentFloorNum;	
 	}
 	
+	protected void setFloorNumber(int currentFloorNum) {
+		this.currentFloorNum= currentFloorNum;	
+	}
+	
 	public void changePeopleNumber(int changeNumOfPerson) {
 		
 		currentPeopleNum+=changeNumOfPerson;		
@@ -44,6 +48,9 @@ public class Elevator implements Runnable{
 		return riseTask;
 	}
 	
+	protected void setLiftGoUPSign(boolean liftGoUp) {
+		this.liftGoUp = liftGoUp;
+	}
 	
 	public boolean isLiftGoUp() {
 		return liftGoUp;
