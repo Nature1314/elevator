@@ -103,5 +103,18 @@ public class ElevatorTest {
         assertEquals(expResult, result);
 	}
 	
+	@Test
+	public void test_changeFloorNumber_LiftGoDownAndPeopleGoDown() {
+		System.out.println("Test changing floor Number LiftGoDown");
+        Elevator lift = new Elevator();
+        int expResult = 1;
+        int floorNumberOfPersonComeIn = 3;
+        int floorNumberOfPersonLeaveOut = 2;
+        lift.addTasks(floorNumberOfPersonComeIn, floorNumberOfPersonLeaveOut);
+        lift.changeFloorNumberAndRemoveTasks();
+        int result = lift.getFloorNumber();
+        assertEquals(expResult, result);
+	}
+	
 	
 }
