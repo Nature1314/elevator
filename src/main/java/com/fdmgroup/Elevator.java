@@ -3,7 +3,12 @@ package com.fdmgroup;
 
 import java.util.TreeMap;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 public class Elevator implements Runnable{
+	
+	Logger log = LogManager.getLogger(Elevator.class);
 	
 	private int currentPeopleNum =0;//The number of people in the lift
 	private int currentFloorNum =0 ;
@@ -50,25 +55,44 @@ public class Elevator implements Runnable{
 		 * 2.check if we need to remove the task and remove it.
 		 * The lift floor number increase only if the lift goes up and we have tasks to go up. 
 		 * Other condition the floor number decreases unless we are on ground floor*/
-		System.out.println(threadID+ " elevator is at "+ currentFloorNum );
 		
+		log.info("the elevator ID "+ threadID+" now reaching " + currentFloorNum + " floor");
+
 		if(!riseTask.isEmpty()&&liftGoUp) {
 			//This part will remove the task from the riseTask treeMap and call the method changePeopleNumber to change the number of currentPeopleNum
 			if(riseTask.containsKey(currentFloorNum)) {
 				changePeopleNumber(riseTask.get(currentFloorNum));
-				System.out.printf(threadID +" Revome task (%d,%d)  \n",currentFloorNum, riseTask.get(currentFloorNum));
+				if(riseTask.get(currentFloorNum)>0) {
+					log.info("ID "+threadID +" elevator reach people at " + currentFloorNum + " floor");
+					//log.info("ID "+threadID +" elevator remove task (" + currentFloorNum + " ," + riseTask.get(currentFloorNum) + ")");
+				}else if(riseTask.get(currentFloorNum)<0) {
+					log.info("ID "+threadID +" elevator send people at " + currentFloorNum + " floor");
+				}
+				//System.out.printf(threadID +" Revome task (%d,%d)  \n",currentFloorNum, riseTask.get(currentFloorNum));
 				currentPeopleNum-=riseTask.get(currentFloorNum);
 				riseTask.remove(currentFloorNum);
 			}
-			if(!riseTask.isEmpty())
+			if(!riseTask.isEmpty()&&riseTask.descendingKeySet().first()>currentFloorNum)
 				currentFloorNum++;
+			else 
+				liftGoUp=false;
 		}else if(riseTask.isEmpty()&&liftGoUp) {		
 			liftGoUp=false;			
 		}else if (!dropTask.isEmpty() && !liftGoUp && currentFloorNum>=0) {
 			//This part will remove the task from the dropTask treeMap and call the method changePeopleNumber to change the number of currentPeopleNum
 			if(dropTask.containsKey(currentFloorNum)) {
 				changePeopleNumber(dropTask.get(currentFloorNum));
-				System.out.printf(threadID +" Revome task (%d,%d)  \n",currentFloorNum, dropTask.get(currentFloorNum));
+				
+				if(dropTask.get(currentFloorNum)>0) {
+					log.info("ID "+threadID +" elevator reach people at " + currentFloorNum + " floor");
+					//log.info("ID "+threadID +" elevator remove task (" + currentFloorNum + " ," + riseTask.get(currentFloorNum) + ")");
+				}else if(dropTask.get(currentFloorNum)<0) {
+					log.info("ID "+threadID +" elevator send people at " + currentFloorNum + " floor");
+				}
+				
+				//log.info(String.format(threadID +" Revome task (%d,%d)  \n",currentFloorNum, dropTask.get(currentFloorNum)));
+				
+				//System.out.printf(threadID +" Revome task (%d,%d)  \n",currentFloorNum, dropTask.get(currentFloorNum));
 				currentPeopleNum-=dropTask.get(currentFloorNum);
 				dropTask.remove(currentFloorNum);
 			}
@@ -119,7 +143,10 @@ public class Elevator implements Runnable{
 			}else
 			    currentPeopleNum++;
 			
-		}else if (floorNumberOfPersonComeIn<floorNumberOfPersonLeaveOut&& this.isLiftGoUp()) {
+			log.info(String.format(threadID + " elevator add go down task that person comes in on floor %d and leave out on floor %d \n", 
+					floorNumberOfPersonComeIn, floorNumberOfPersonLeaveOut));
+			
+		}else if (floorNumberOfPersonComeIn<floorNumberOfPersonLeaveOut) {
 			//The elevator go up and the the people wants to go up
 			if(riseTask.containsKey(floorNumberOfPersonComeIn)) {
 				numberAfterANewPersonEnter = riseTask.get(floorNumberOfPersonComeIn)+1;
@@ -138,14 +165,20 @@ public class Elevator implements Runnable{
 			riseTask.put(floorNumberOfPersonComeIn, numberAfterANewPersonEnter);
 			riseTask.put(floorNumberOfPersonLeaveOut, numberAfterAPersonExit);
 			//update current people number
-			if(this.isLiftGoUp()) {
+			if(currentFloorNum>floorNumberOfPersonComeIn) {
 				dropTask.put(this.currentFloorNum, 0);
 				dropTask.put(floorNumberOfPersonComeIn, 0);
 			}else
 				currentPeopleNum++;
+			log.info(String.format(threadID + " elevator add go up task that person comes in on floor %d and leave out on floor %d \n", 
+					floorNumberOfPersonComeIn, floorNumberOfPersonLeaveOut));
 		}
-		System.out.printf(threadID + " elevator add task (%d,%d) and (%d,%d) \n", 
-				floorNumberOfPersonComeIn, numberAfterANewPersonEnter, floorNumberOfPersonLeaveOut, numberAfterAPersonExit);
+		
+//		log.info(String.format(threadID + " elevator add task (%d,%d) and (%d,%d) \n", 
+//				floorNumberOfPersonComeIn, numberAfterANewPersonEnter, floorNumberOfPersonLeaveOut, numberAfterAPersonExit));
+//		
+		//System.out.printf(threadID + " elevator add task (%d,%d) and (%d,%d) \n", 
+			//	floorNumberOfPersonComeIn, numberAfterANewPersonEnter, floorNumberOfPersonLeaveOut, numberAfterAPersonExit);
 	}
 	
 	
@@ -155,7 +188,7 @@ public class Elevator implements Runnable{
 		// Getting thread's ID
         threadID =Thread.currentThread().getId();
        while(true) {
-    	   if(!riseTask.isEmpty()||!dropTask.isEmpty())
+    	   if(!riseTask.isEmpty()||!dropTask.isEmpty()||(riseTask.isEmpty()&&dropTask.isEmpty()&&liftGoUp==false))
     		   changeFloorNumberAndRemoveTasks();
         	try {
 				Thread.sleep(3000);
