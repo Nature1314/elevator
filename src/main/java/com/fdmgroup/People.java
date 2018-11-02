@@ -4,7 +4,8 @@ public class People {
 	
 	private int floorEnterNum;
 	private int floorExitNum;
-	 
+	
+	protected People() {};
 	public People(int floorEnterNum, int floorExitNum) {
 		this.floorEnterNum = floorEnterNum;
 		this.floorExitNum = floorExitNum;
