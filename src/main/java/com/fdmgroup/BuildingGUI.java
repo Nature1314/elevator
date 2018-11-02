@@ -23,7 +23,7 @@ public class BuildingGUI {
 	private JButton cancelbtn = new JButton("Cancel");
 	
 	 public BuildingGUI() {
-		 jFrameBuilding.setBounds(300, 200, 600, 300);
+		 jFrameBuilding.setBounds(300, 200, 600, 200);
 		 cBuilding.setLayout(new BorderLayout()); 
 		 buildingInit();
 		 jFrameBuilding.setVisible(true);
@@ -38,15 +38,15 @@ public class BuildingGUI {
 		 
 		 JPanel fieldPanel = new JPanel();
 		 fieldPanel.setLayout(null);
-		 lBuildTotalFloor.setBounds(30, 20, 150, 20);
-		 lTotalNumOfLift.setBounds(30, 40,150, 20);
-		 lMaxPeoson.setBounds(30, 60, 150, 20);
+		 lBuildTotalFloor.setBounds(30, 20, 300, 20);
+		 lTotalNumOfLift.setBounds(30, 40,300, 20);
+		 lMaxPeoson.setBounds(30, 60, 300, 20);
 		 fieldPanel.add(lBuildTotalFloor);
 		 fieldPanel.add(lTotalNumOfLift);
 		 fieldPanel.add(lMaxPeoson);
-		 TBuildTotalFloor.setBounds(200, 20, 250, 20);
-		 TTotalNumOfLift.setBounds(200, 40, 250, 20);
-		 TMaxPeople.setBounds(200, 60, 250, 20);
+		 TBuildTotalFloor.setBounds(350, 20, 50, 20);
+		 TTotalNumOfLift.setBounds(350, 40, 50, 20);
+		 TMaxPeople.setBounds(350, 60, 50, 20);
 		 fieldPanel.add(TBuildTotalFloor);
 		 fieldPanel.add(TTotalNumOfLift);
 		 fieldPanel.add(TMaxPeople); 
